@@ -1,0 +1,4 @@
+trans_id;account_id;date;type;operation;amount;balance;k_symbol;branch;bank;account
+967842;1532;1998-05-31;PRIJEM;;253;62661;UROK;AR;;0
+271012;1499;1998-01-09;PRIJEM;VKLAD;5500;49790;;AR;;0
+971490;1645;1996-11-30;PRIJEM;;43;19460;UROK;AR;;0
