@@ -46,6 +46,15 @@ object SparkRunner extends App {
 
   AvgLoanAmountPerDistrictVisualiser().visualise(loans, accountData)
 
+  //Faker library in Python
+  //https://databricks.com/blog/2017/02/13/anonymizing-datasets-at-scale-leveraging-databricks-interoperability.html
+  //Our column can have repeatable records
+  //1) monotonically_increasing_id() function of Spark. Data Integrity suffers
+  //2) Map old keys to newly generated keys, join table with old keys to
+  // the table with mappings by oldKey id, remove old key column. Performance ?
+  //3) Map the column to sha1 . Data Integrity would be ok, performance as well
+  //4) substr, concat, etc. Performance +, but data integrity - and security -
+
 
 //  cleanedDF.join(accountData,
 //    col("accountId") === col("account_accountId"))
