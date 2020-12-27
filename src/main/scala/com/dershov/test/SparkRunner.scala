@@ -1,8 +1,8 @@
 package com.dershov.test
 
-import com.dershov.test.analytics.{CorrelationFinder, MaxShareCalculator}
+import com.dershov.test.analytics.{AvgLoanAmountPerDistrictVisualiser, CorrelationFinder, MaxShareCalculator}
 import com.dershov.test.checks.TransIdDuplicatesFinder
-import com.dershov.test.readers.{AccountDataReader, DistrictDataReader, TransDataReader}
+import com.dershov.test.readers.{AccountDataReader, DistrictDataReader, LoanDataReader, TransDataReader}
 import org.apache.spark.ml.stat.{ChiSquareTest, Correlation}
 import org.apache.spark.ml.linalg.{Matrix, Vectors}
 import org.apache.spark.mllib.stat.Statistics
@@ -30,7 +30,7 @@ object SparkRunner extends App {
     broadcast(AccountDataReader.readDataFrameFromCSV(pathToAccountTable)
         .select("accountId", "districtId"))
 
-  println(MaxShareCalculator().calculate(cleanedDF, accountData))
+//  println(MaxShareCalculator().calculate(cleanedDF, accountData))
 
 
 
@@ -39,7 +39,13 @@ object SparkRunner extends App {
     .select(col("districtId"),
       col("A4").as("numOfInhabits"))
 
-  println(CorrelationFinder().findCorrelation(cleanedDF, accountData, districtData))
+//  println(CorrelationFinder().findCorrelation(cleanedDF, accountData, districtData))
+
+  private val pathToLoansData: String = this.getClass.getResource("loan.csv").toString
+  private val loans: DataFrame = LoanDataReader.readDataFrameFromCSV(pathToLoansData)
+
+  AvgLoanAmountPerDistrictVisualiser().visualise(loans, accountData)
+
 
 //  cleanedDF.join(accountData,
 //    col("accountId") === col("account_accountId"))
